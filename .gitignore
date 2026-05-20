@@ -1,0 +1,8 @@
+.DS_Store
+*.log
+
+# Backups locais (não precisam versionar)
+images/logo-original.webp
+
+# Vercel (link local da CLI)
+.vercel
