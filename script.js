@@ -186,19 +186,8 @@
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 
-  /* ---------------- Tracking de CTAs (Meta Pixel) ---------------- */
-  // WhatsApp  -> Lead (intenção forte: contato direto para reservar)
-  // Airbnb    -> InitiateCheckout (clique sai do site rumo ao checkout do Airbnb)
-  document.querySelectorAll('[data-cta]').forEach(el => {
-    el.addEventListener('click', () => {
-      if (!window.fbq) return;
-      const ctaId = el.getAttribute('data-cta') || '';
-      if (ctaId.includes('whatsapp')) {
-        fbq('track', 'Lead', { cta: ctaId });
-      } else if (ctaId.includes('airbnb')) {
-        fbq('track', 'InitiateCheckout', { cta: ctaId });
-      }
-    });
-  });
+  /* Tracking de CTAs migrado para o Google Tag Manager (GTM-WJZH2X5V):
+     WhatsApp -> Lead, Airbnb -> InitiateCheckout, com content_name = data-cta (chalé).
+     Os atributos data-cta nos botões continuam sendo usados pela variável do GTM. */
 
 })();
