@@ -1,3 +1,10 @@
 .DS_Store
 *.log
 images/logo-original.webp
+
+# Material bruto: fica no computador, não é publicado
+images/Não utilizar/
+*.mp4
+*.mov
+*.heic
+*.HEIC

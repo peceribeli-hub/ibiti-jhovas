@@ -181,6 +181,93 @@
   });
 
 
+  /* ---------------- Lightbox: clique na foto abre em tamanho real ---------------- */
+  (() => {
+    const lb    = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lightbox-img');
+    const lbCap = document.getElementById('lightbox-cap');
+    const lbCon = document.getElementById('lightbox-contador');
+    if (!lb || !lbImg) return;
+
+    const btnPrev = lb.querySelector('[data-lb-prev]');
+    const btnNext = lb.querySelector('[data-lb-next]');
+
+    let fotos = [];   // imgs da galeria clicada
+    let idx = 0;
+    let origem = null; // pra devolver o foco ao fechar
+
+    const mostrar = () => {
+      const img = fotos[idx];
+      if (!img) return;
+      lbImg.src = img.currentSrc || img.src;
+      lbImg.alt = img.alt || '';
+      if (lbCap) lbCap.textContent = img.alt || '';
+      if (lbCon) lbCon.textContent = fotos.length > 1 ? `(${idx + 1} de ${fotos.length})` : '';
+      if (btnPrev) btnPrev.disabled = idx <= 0;
+      if (btnNext) btnNext.disabled = idx >= fotos.length - 1;
+    };
+
+    const abrir = (galeria, img) => {
+      fotos = Array.from(galeria.querySelectorAll('[data-track] img'));
+      idx = Math.max(0, fotos.indexOf(img));
+      origem = img;
+      mostrar();
+      lb.hidden = false;
+      lb.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-aberto');
+      const alvo = lb.querySelector('.lightbox__close');
+      if (alvo) alvo.focus();
+    };
+
+    const fechar = () => {
+      lb.hidden = true;
+      lb.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-aberto');
+      lbImg.src = '';
+      if (origem && typeof origem.focus === 'function') origem.focus();
+      origem = null;
+    };
+
+    const ir = (passo) => {
+      const novo = idx + passo;
+      if (novo < 0 || novo >= fotos.length) return;
+      idx = novo;
+      mostrar();
+    };
+
+    // delegação: pega qualquer foto de qualquer galeria, inclusive as da área comum
+    document.addEventListener('click', (e) => {
+      const img = e.target.closest('[data-gallery] [data-track] img');
+      if (!img) return;
+      const galeria = img.closest('[data-gallery]');
+      if (!galeria) return;
+      e.preventDefault();
+      abrir(galeria, img);
+    });
+
+    lb.querySelectorAll('[data-fechar-lightbox]').forEach(b => b.addEventListener('click', fechar));
+    if (btnPrev) btnPrev.addEventListener('click', () => ir(-1));
+    if (btnNext) btnNext.addEventListener('click', () => ir(1));
+
+    document.addEventListener('keydown', (e) => {
+      if (lb.hidden) return;
+      if (e.key === 'Escape')     { fechar(); }
+      if (e.key === 'ArrowLeft')  { ir(-1); }
+      if (e.key === 'ArrowRight') { ir(1); }
+    });
+
+    // arrastar pro lado no celular
+    let x0 = null;
+    lb.addEventListener('touchstart', (e) => { x0 = e.changedTouches[0].clientX; }, { passive: true });
+    lb.addEventListener('touchend', (e) => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 50) ir(dx < 0 ? 1 : -1);
+      x0 = null;
+    }, { passive: true });
+  })();
+
+
   /* ---------------- Ano no footer ---------------- */
   const yearEl = document.querySelector('[data-year]');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
@@ -189,5 +276,103 @@
   /* Tracking de CTAs migrado para o Google Tag Manager (GTM-WJZH2X5V):
      WhatsApp -> Lead, Airbnb -> InitiateCheckout, com content_name = data-cta (chalé).
      Os atributos data-cta nos botões continuam sendo usados pela variável do GTM. */
+
+
+  /* ---------------- Modal Pré-reserva ---------------- */
+  (() => {
+    const modal = document.getElementById('prereserva');
+    const form  = document.getElementById('prereserva-form');
+    if (!modal || !form) return;
+
+    const ENDPOINT = 'https://script.google.com/macros/s/AKfycbx6dTvCBMGjz_47mwSwgW6uBeF1X9oqRlg1wdk0a-zk6-3D31abI1p2YpPBeEoMhl48-Q/exec';
+    const WHATS = '5532984789082';
+    const selChale = document.getElementById('prereserva-chale');
+
+    // data-cta do botão -> nome do chalé (pra pré-selecionar)
+    const MAPA = {
+      'chale-pode-cre-whatsapp': 'Chalé Pode-Cré',
+      'chale-uai-so-whatsapp':   'Chalé Uai-Só',
+      'chale-trem-bao-whatsapp': 'Chalé Trem-Bão',
+      'chale-demais-whatsapp':   'Chalé Demais da Conta'
+    };
+
+    // data-cta do botão -> rótulo de origem (de qual botão o lead veio)
+    const ORIGEM = {
+      'hero-whatsapp':           'Hero (topo do site)',
+      'chale-pode-cre-whatsapp': 'Card Chalé Pode-Cré',
+      'chale-uai-so-whatsapp':   'Card Chalé Uai-Só',
+      'chale-trem-bao-whatsapp': 'Card Chalé Trem-Bão',
+      'chale-demais-whatsapp':   'Card Chalé Demais',
+      'valores-whatsapp':        'Seção Tarifas',
+      'cta-final-whatsapp':      'CTA Final'
+    };
+    let origemAtual = 'form-site';
+
+    const abrir = (chale) => {
+      if (chale && selChale) selChale.value = chale;
+      modal.hidden = false;
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('modal-aberto');
+    };
+    const fechar = () => {
+      modal.hidden = true;
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('modal-aberto');
+    };
+
+    // Botões de RESERVA (hero / chalé / valores / cta-final + whatsapp) abrem o modal.
+    // Os secundários (nav, rodapé, flutuante, eventos) seguem direto pro WhatsApp.
+    document.querySelectorAll('a[data-cta]').forEach((el) => {
+      const cta = el.getAttribute('data-cta') || '';
+      const ehReserva = cta.includes('whatsapp') &&
+        (cta.startsWith('hero') || cta.startsWith('chale-') ||
+         cta.startsWith('valores') || cta.startsWith('cta-final'));
+      if (!ehReserva) return;
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        origemAtual = ORIGEM[cta] || cta;
+        abrir(MAPA[cta] || '');
+      });
+    });
+
+    modal.querySelectorAll('[data-fechar-modal]').forEach((b) => b.addEventListener('click', fechar));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) fechar(); });
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const fd = new FormData(form);
+      const dados = {
+        nome:     (fd.get('nome')     || '').toString().trim(),
+        whatsapp: (fd.get('whatsapp') || '').toString().trim(),
+        chale:    (fd.get('chale')    || '').toString(),
+        checkin:  (fd.get('checkin')  || '').toString(),
+        checkout: (fd.get('checkout') || '').toString(),
+        hospedes: (fd.get('hospedes') || '').toString(),
+        origem:   origemAtual
+      };
+
+      // 1) Salva na planilha (não bloqueia; keepalive garante o envio mesmo ao abrir o WhatsApp)
+      try {
+        fetch(ENDPOINT, { method: 'POST', body: JSON.stringify(dados), keepalive: true }).catch(() => {});
+      } catch (err) { /* silencioso */ }
+
+      // 2) Evento pro GTM (pré-reserva qualificada) — o Lead passa a disparar aqui
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: 'prereserva_enviada', chale: dados.chale, hospedes: dados.hospedes, origem: dados.origem });
+
+      // 3) Abre o WhatsApp com a mensagem já montada
+      const msg =
+        'Olá! Quero fazer uma pré-reserva:\n' +
+        '\n👤 ' + dados.nome +
+        '\n🏡 ' + dados.chale +
+        '\n📅 Check-in: ' + dados.checkin +
+        '\n📅 Check-out: ' + dados.checkout +
+        '\n👥 Hóspedes: ' + dados.hospedes;
+      window.open('https://wa.me/' + WHATS + '?text=' + encodeURIComponent(msg), '_blank');
+
+      fechar();
+      form.reset();
+    });
+  })();
 
 })();

@@ -4,5 +4,13 @@
 # Backups locais (não precisam versionar)
 images/logo-original.webp
 
+# Área de trabalho da Paola: material bruto e fotos descartadas.
+# Fica no computador dela, organizada como quiser, mas não vai pro site.
+images/Não utilizar/
+*.mp4
+*.mov
+*.heic
+*.HEIC
+
 # Vercel (link local da CLI)
 .vercel

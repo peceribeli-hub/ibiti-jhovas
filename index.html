@@ -22,7 +22,7 @@
   <meta property="og:locale" content="pt_BR" />
   <meta property="og:title" content="Ibiti Jhovas Chalés · Refúgio em Conceição da Ibitipoca, MG" />
   <meta property="og:description" content="Quatro chalés completos a 5 min da Vila e 7 min do Parque. Recebidos com cuidado por Tânia & Giovani." />
-  <meta property="og:image" content="./images/hero.webp" />
+  <meta property="og:image" content="./images/Utilizar/Hero/hero.webp" />
 
   <!-- Favicon (placeholder usa o logo enviado) -->
   <link rel="icon" type="image/webp" href="./images/logo.webp" />
@@ -33,11 +33,48 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Manrope:wght@300..700&display=swap" />
 
   <!-- Preload da imagem do hero (acelera o LCP no tráfego pago) -->
-  <link rel="preload" as="image" href="./images/hero.webp" />
+  <link rel="preload" as="image" href="./images/Utilizar/Hero/hero.webp" />
 
   <link rel="stylesheet" href="./styles.css" />
 
   <!-- Rastreamento (Meta Pixel + eventos) migrado para o Google Tag Manager (GTM-WJZH2X5V) -->
+
+  <!-- Estilos do modal de pré-reserva -->
+  <style>
+    .prereserva[hidden]{ display:none; }
+    .prereserva{ position:fixed; inset:0; z-index:1000; display:flex; align-items:center; justify-content:center; padding:1rem; }
+    .prereserva__overlay{ position:absolute; inset:0; background:rgba(31,14,7,.6); }
+    .prereserva__box{ position:relative; width:100%; max-width:440px; max-height:92vh; overflow-y:auto; background:var(--paper); border:1px solid var(--line); border-radius:var(--r-lg); box-shadow:var(--shadow-lg); padding:clamp(1.5rem,4vw,2.25rem); }
+    .prereserva__close{ position:absolute; top:.6rem; right:.85rem; background:none; border:none; font-size:1.9rem; line-height:1; color:var(--ink-soft); }
+    .prereserva__titulo{ font-family:'Newsreader',Georgia,serif; font-size:1.7rem; margin:0 0 .25rem; color:var(--wood-deep); }
+    .prereserva__sub{ margin:0 0 1.25rem; font-size:.82rem; color:var(--ink-soft); line-height:1.5; }
+    .prereserva__form{ display:flex; flex-direction:column; gap:.85rem; }
+    .prereserva__label{ display:flex; flex-direction:column; gap:.3rem; font-size:.82rem; font-weight:700; color:var(--ink); }
+    .prereserva__label input, .prereserva__label select{ font:inherit; font-weight:400; padding:.6rem .7rem; border:1px solid var(--line); border-radius:var(--r-sm); background:#fff; color:var(--ink); }
+    .prereserva__label input:focus, .prereserva__label select:focus{ outline:2px solid var(--terracotta); outline-offset:1px; }
+    .prereserva__row{ display:flex; gap:.7rem; }
+    .prereserva__row .prereserva__label{ flex:1; }
+    .prereserva__nota{ margin:.15rem 0 .1rem; font-size:.82rem; color:var(--ink-soft); }
+    .prereserva__enviar{ margin-top:.4rem; padding:.85rem; border:none; border-radius:var(--r); background:var(--terracotta); color:#fff; font-weight:700; font-size:1rem; }
+    .prereserva__enviar:hover{ background:var(--terracotta-deep); }
+    .prereserva__aviso{ margin:.6rem 0 0; font-size:.75rem; color:var(--ink-mute); text-align:center; line-height:1.45; }
+    body.modal-aberto{ overflow:hidden; }
+    .chale-card__actions{ flex-direction:row; align-items:center; justify-content:center; gap:1.25rem; flex-wrap:wrap; }
+    .chale-card__actions .btn--primary{ padding:.9rem 1.7rem; font-size:.92rem; }
+    .chale-card__sec{ display:flex; flex-direction:column; align-items:stretch; gap:.5rem; }
+    .btn--xs{ padding:.5rem 1rem; font-size:.78rem; }
+    .chale-card__actions .btn--secondary{ background:var(--terracotta-soft); color:var(--wood-deep); }
+    .chale-card__actions .btn--secondary:hover{ background:var(--line); }
+    .btn--stacked{ flex-direction:column; gap:.1rem; line-height:1.2; }
+    .btn--stacked .btn-sub{ font-size:.66rem; font-weight:600; opacity:.85; }
+    @media (max-width:600px){ .chale-card__actions{ flex-direction:column; align-items:stretch; gap:.65rem; } }
+    .intro__area-nota{ margin-top:1rem; font-size:.9rem; color:var(--ink-soft); background:rgba(184,111,58,0.06); border-left:3px solid var(--terracotta); padding:.9rem 1.1rem; border-radius:var(--r-sm); line-height:1.55; }
+    .intro__area-nota p{ margin:0; }
+    .intro__area-nota__titulo{ margin-top:1.15rem; font-weight:700; color:var(--ink); }
+    .intro__area-nota__lista{ margin:.25rem 0 0; padding:0; list-style:none; }
+    .intro__area-nota__lista li{ margin:.12rem 0; }
+    .intro__area-nota__lista strong{ color:var(--ink); font-weight:700; }
+  </style>
 </head>
 
 <body>
@@ -63,15 +100,12 @@
         <a href="#valores">Tarifas</a>
         <a href="#depoimentos">Hóspedes</a>
         <a href="#localizacao">Localização</a>
+        <a href="#faq">Dúvidas</a>
       </nav>
 
-      <a class="btn btn--small btn--primary nav__cta"
-         href="https://wa.me/5532984789082?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20saber%20sobre%20disponibilidade%20nos%20chal%C3%A9s."
-         target="_blank" rel="noopener"
-         data-cta="nav-whatsapp">
-        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.86 9.86 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01A9.82 9.82 0 0 0 12.04 2zm0 18.15h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.11.82.83-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23 2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.24 8.23zm4.52-6.16c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.78.97-.14.16-.29.18-.54.06-.25-.12-1.04-.38-1.99-1.22-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14-.01-.31-.01-.48-.01s-.43.06-.66.31c-.23.25-.86.84-.86 2.06s.88 2.39 1 2.55c.12.16 1.74 2.66 4.21 3.73.59.25 1.04.4 1.4.52.59.19 1.12.16 1.55.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg>
-        WhatsApp
-      </a>
+      <!-- Botão de WhatsApp do menu removido em 31/07/2026:
+           só o flutuante (inferior direito) fica como canal de dúvida.
+           Os demais CTAs passam pelo formulário de pré-reserva. -->
 
       <button class="nav__toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu">
         <span></span><span></span><span></span>
@@ -84,6 +118,7 @@
       <a href="#valores">Tarifas</a>
       <a href="#depoimentos">Hóspedes</a>
       <a href="#localizacao">Localização</a>
+      <a href="#faq">Dúvidas</a>
     </div>
   </header>
 
@@ -91,7 +126,7 @@
   <!-- ================== HERO ================== -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__media">
-      <img src="./images/hero.webp" alt="Vista dos Ibiti Jhovas Chalés em Conceição da Ibitipoca" fetchpriority="high" />
+      <img src="./images/Utilizar/Hero/hero.webp" alt="Vista dos Ibiti Jhovas Chalés em Conceição da Ibitipoca" fetchpriority="high" />
       <div class="hero__media-overlay" aria-hidden="true"></div>
     </div>
 
@@ -166,6 +201,15 @@
           da gastronomia local e dos mirantes mais bonitos da região.
         </p>
 
+        <div class="intro__area-nota">
+          <p>🌿 A área comum é compartilhada entre os hóspedes.</p>
+          <p class="intro__area-nota__titulo">Horário de funcionamento</p>
+          <ul class="intro__area-nota__lista">
+            <li><strong>Piscina:</strong> das 7h às 22h</li>
+            <li><strong>Sauna:</strong> consultar horários</li>
+          </ul>
+        </div>
+
         <div class="intro__highlights">
           <div>
             <span class="big-num">5</span>
@@ -184,17 +228,23 @@
 
       <figure class="intro__photo intro__photo--gallery" data-gallery>
         <div class="intro__photo-track" data-track>
-          <img src="./images/area-fogueira.webp" alt="Fogueira acesa ao entardecer no espaço comum dos chalés" loading="lazy" />
-          <img src="./images/area-fogueira-noite.webp" alt="Fogueira acesa à noite no espaço comum" loading="lazy" />
-          <img src="./images/area-piscina.webp" alt="Piscina dos Ibiti Jhovas Chalés" loading="lazy" />
-        </div>
+              <img src="./images/Utilizar/area/Piscina.webp" alt="Piscina da área comum dos Ibiti Jhovas Chalés" loading="lazy" />
+              <img src="./images/Utilizar/area/Fogueira.webp" alt="Fogueira acesa no espaço comum" loading="lazy" />
+              <img src="./images/Utilizar/area/Sauna.webp" alt="Sauna da área comum" loading="lazy" />
+              <img src="./images/Utilizar/area/Sinuca_1.webp" alt="Mesa de sinuca da área comum" loading="lazy" />
+              <img src="./images/Utilizar/area/Sinuca_2.webp" alt="Mesa de sinuca no espaço comum" loading="lazy" />
+              <img src="./images/Utilizar/area/Rede.webp" alt="Rede para descanso na área comum" loading="lazy" />
+              <img src="./images/Utilizar/area/Vinhos.webp" alt="Adega com seleção de vinhos" loading="lazy" />
+              <img src="./images/Utilizar/area/Banco%20caixa%20dagua.webp" alt="Banco no jardim da área comum" loading="lazy" />
+              <img src="./images/Utilizar/area/Ca%CC%83ofitrio%CC%83es.webp" alt="Cãofitriões" loading="lazy" />
+            </div>
         <button class="intro__photo-nav intro__photo-nav--prev" type="button" data-prev aria-label="Foto anterior">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
         </button>
         <button class="intro__photo-nav intro__photo-nav--next" type="button" data-next aria-label="Próxima foto">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
         </button>
-        <span class="intro__photo-counter" data-counter aria-live="polite">1 / 3</span>
+        <span class="intro__photo-counter" data-counter aria-live="polite">1 / 9</span>
       </figure>
     </div>
   </section>
@@ -220,11 +270,13 @@
         <article class="chale-card reveal">
           <div class="chale-card__media chale-card__gallery" data-gallery>
             <div class="chale-card__track" data-track>
-              <img src="./images/chale-pode-cre/Frente.webp" alt="Fachada do Chalé Pode Crê" loading="lazy" />
-              <img src="./images/chale-pode-cre/Vista.webp" alt="Vista a partir do Chalé Pode Crê" loading="lazy" />
-              <img src="./images/chale-pode-cre/Quarto.webp" alt="Quarto do Chalé Pode Crê" loading="lazy" />
-              <img src="./images/chale-pode-cre/Cozinha_1.webp" alt="Cozinha do Chalé Pode Crê" loading="lazy" />
-              <img src="./images/chale-pode-cre/Banheiro.webp" alt="Banheiro do Chalé Pode Crê" loading="lazy" />
+              <img src="./images/Utilizar/chale-pode-cre/Frente.webp" alt="Fachada do Chalé Pode Crê" loading="lazy" />
+              <img src="./images/Utilizar/chale-pode-cre/Vista.webp" alt="Vista a partir do Chalé Pode Crê" loading="lazy" />
+              <img src="./images/Utilizar/chale-pode-cre/Quarto.webp" alt="Quarto do Chalé Pode Crê" loading="lazy" />
+              <img src="./images/Utilizar/chale-pode-cre/Cozinha_1.webp" alt="Cozinha equipada do Chalé Pode Crê" loading="lazy" />
+              <img src="./images/Utilizar/chale-pode-cre/Cozinha_2.webp" alt="Cozinha equipada do Chalé Pode Crê" loading="lazy" />
+              <img src="./images/Utilizar/chale-pode-cre/Cozinha_3.webp" alt="Cozinha equipada do Chalé Pode Crê" loading="lazy" />
+              <img src="./images/Utilizar/chale-pode-cre/Banheiro.webp" alt="Banheiro do Chalé Pode Crê" loading="lazy" />
             </div>
             <button class="chale-card__nav chale-card__nav--prev" type="button" data-prev aria-label="Foto anterior">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
@@ -232,7 +284,7 @@
             <button class="chale-card__nav chale-card__nav--next" type="button" data-next aria-label="Próxima foto">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
             </button>
-            <span class="chale-card__counter" data-counter aria-live="polite">1 / 5</span>
+            <span class="chale-card__counter" data-counter aria-live="polite">1 / 7</span>
           </div>
           <div class="chale-card__body">
             <div class="chale-card__badges">
@@ -256,11 +308,15 @@
                  data-cta="chale-pode-cre-whatsapp">
                 Reservar pelo WhatsApp
               </a>
-              <a class="btn-link" target="_blank" rel="noopener"
+              <div class="chale-card__sec">
+              <a class="btn btn--secondary btn--xs btn--stacked" target="_blank" rel="noopener"
                  href="https://www.airbnb.com.br/rooms/1216608289338170598"
                  data-cta="chale-pode-cre-airbnb">
-                Ver no Airbnb →
+                <span>Ver no Airbnb →</span>
+                <span class="btn-sub">*Inclui taxa da plataforma</span>
               </a>
+              <a class="btn btn--secondary btn--xs" href="#valores">Consultar preço →</a>
+              </div>
             </div>
           </div>
         </article>
@@ -269,13 +325,12 @@
         <article class="chale-card reveal">
           <div class="chale-card__media chale-card__gallery" data-gallery>
             <div class="chale-card__track" data-track>
-              <img src="./images/chale-uai-so/Frente.webp" alt="Fachada do Chalé Uai Sô" loading="lazy" />
-              <img src="./images/chale-uai-so/Varanda.webp" alt="Varanda do Chalé Uai Sô" loading="lazy" />
-              <img src="./images/chale-uai-so/Dentro_Geral.webp" alt="Interior do Chalé Uai Sô" loading="lazy" />
-              <img src="./images/chale-uai-so/Cama.webp" alt="Quarto do Chalé Uai Sô" loading="lazy" />
-              <img src="./images/chale-uai-so/Cozinha.webp" alt="Cozinha do Chalé Uai Sô" loading="lazy" />
-              <img src="./images/chale-uai-so/Cozinha_2.webp" alt="Detalhe da cozinha do Chalé Uai Sô" loading="lazy" />
-              <img src="./images/chale-uai-so/Banheiro.webp" alt="Banheiro do Chalé Uai Sô" loading="lazy" />
+              <img src="./images/Utilizar/chale-uai-so/Frente.webp" alt="Fachada do Chalé Uai Sô" loading="lazy" />
+              <img src="./images/Utilizar/chale-uai-so/Varanda.webp" alt="Varanda do Chalé Uai Sô" loading="lazy" />
+              <img src="./images/Utilizar/chale-uai-so/Dentro_Geral.webp" alt="Interior do Chalé Uai Sô" loading="lazy" />
+              <img src="./images/Utilizar/chale-uai-so/Cama.webp" alt="Quarto do Chalé Uai Sô" loading="lazy" />
+              <img src="./images/Utilizar/chale-uai-so/Cozinha.webp" alt="Cozinha equipada do Chalé Uai Sô" loading="lazy" />
+              <img src="./images/Utilizar/chale-uai-so/Banheiro.webp" alt="Banheiro do Chalé Uai Sô" loading="lazy" />
             </div>
             <button class="chale-card__nav chale-card__nav--prev" type="button" data-prev aria-label="Foto anterior">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
@@ -283,7 +338,7 @@
             <button class="chale-card__nav chale-card__nav--next" type="button" data-next aria-label="Próxima foto">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
             </button>
-            <span class="chale-card__counter" data-counter aria-live="polite">1 / 7</span>
+            <span class="chale-card__counter" data-counter aria-live="polite">1 / 6</span>
           </div>
           <div class="chale-card__body">
             <div class="chale-card__badges">
@@ -307,11 +362,15 @@
                  data-cta="chale-uai-so-whatsapp">
                 Reservar pelo WhatsApp
               </a>
-              <a class="btn-link" target="_blank" rel="noopener"
+              <div class="chale-card__sec">
+              <a class="btn btn--secondary btn--xs btn--stacked" target="_blank" rel="noopener"
                  href="https://www.airbnb.com.br/rooms/1211599839389237705"
                  data-cta="chale-uai-so-airbnb">
-                Ver no Airbnb →
+                <span>Ver no Airbnb →</span>
+                <span class="btn-sub">*Inclui taxa da plataforma</span>
               </a>
+              <a class="btn btn--secondary btn--xs" href="#valores">Consultar preço →</a>
+              </div>
             </div>
           </div>
         </article>
@@ -320,13 +379,12 @@
         <article class="chale-card reveal">
           <div class="chale-card__media chale-card__gallery" data-gallery>
             <div class="chale-card__track" data-track>
-              <img src="./images/chale-trem-bao/Frente.webp" alt="Fachada do Chalé Trem Bão com placa em madeira" loading="lazy" />
-              <img src="./images/chale-trem-bao/Varanda.webp" alt="Varanda do Chalé Trem Bão" loading="lazy" />
-              <img src="./images/chale-trem-bao/Dentro_Geral.webp" alt="Interior do Chalé Trem Bão" loading="lazy" />
-              <img src="./images/chale-trem-bao/Cozinha_1.webp" alt="Cozinha do Chalé Trem Bão" loading="lazy" />
-              <img src="./images/chale-trem-bao/Cozinha_2.webp" alt="Detalhe da cozinha do Chalé Trem Bão" loading="lazy" />
-              <img src="./images/chale-trem-bao/Cozinha_3.webp" alt="Outro ângulo da cozinha do Chalé Trem Bão" loading="lazy" />
-              <img src="./images/chale-trem-bao/Banheiro.webp" alt="Banheiro do Chalé Trem Bão" loading="lazy" />
+              <img src="./images/Utilizar/chale-trem-bao/Frente.webp" alt="Fachada do Chalé Trem Bão" loading="lazy" />
+              <img src="./images/Utilizar/chale-trem-bao/Varanda.webp" alt="Varanda do Chalé Trem Bão" loading="lazy" />
+              <img src="./images/Utilizar/chale-trem-bao/Dentro_Geral.webp" alt="Interior do Chalé Trem Bão" loading="lazy" />
+              <img src="./images/Utilizar/chale-trem-bao/Cozinha_1.webp" alt="Cozinha equipada do Chalé Trem Bão" loading="lazy" />
+              <img src="./images/Utilizar/chale-trem-bao/Cozinha_2.webp" alt="Cozinha equipada do Chalé Trem Bão" loading="lazy" />
+              <img src="./images/Utilizar/chale-trem-bao/Banheiro.webp" alt="Banheiro do Chalé Trem Bão" loading="lazy" />
             </div>
             <button class="chale-card__nav chale-card__nav--prev" type="button" data-prev aria-label="Foto anterior">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
@@ -334,7 +392,7 @@
             <button class="chale-card__nav chale-card__nav--next" type="button" data-next aria-label="Próxima foto">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
             </button>
-            <span class="chale-card__counter" data-counter aria-live="polite">1 / 7</span>
+            <span class="chale-card__counter" data-counter aria-live="polite">1 / 6</span>
           </div>
           <div class="chale-card__body">
             <div class="chale-card__badges">
@@ -358,11 +416,15 @@
                  data-cta="chale-trem-bao-whatsapp">
                 Reservar pelo WhatsApp
               </a>
-              <a class="btn-link" target="_blank" rel="noopener"
+              <div class="chale-card__sec">
+              <a class="btn btn--secondary btn--xs btn--stacked" target="_blank" rel="noopener"
                  href="https://www.airbnb.com.br/rooms/1226760146619483748"
                  data-cta="chale-trem-bao-airbnb">
-                Ver no Airbnb →
+                <span>Ver no Airbnb →</span>
+                <span class="btn-sub">*Inclui taxa da plataforma</span>
               </a>
+              <a class="btn btn--secondary btn--xs" href="#valores">Consultar preço →</a>
+              </div>
             </div>
           </div>
         </article>
@@ -371,16 +433,15 @@
         <article class="chale-card reveal">
           <div class="chale-card__media chale-card__gallery" data-gallery>
             <div class="chale-card__track" data-track>
-              <img src="./images/chale-demais/Frente.webp" alt="Fachada do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/chale-demais/Varanda_1.webp" alt="Varanda do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/chale-demais/Varanda_2.webp" alt="Outro ângulo da varanda do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/chale-demais/Dentro_Geral.webp" alt="Interior do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/chale-demais/Sofa.webp" alt="Sala do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/chale-demais/Quarto_1.webp" alt="Quarto do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/chale-demais/Quarto_2.webp" alt="Segundo quarto do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/chale-demais/Cozinha_1.webp" alt="Cozinha do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/chale-demais/Cozinha_2.webp" alt="Detalhe da cozinha do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/chale-demais/Banheiro.webp" alt="Banheiro do Chalé Demais da Conta" loading="lazy" />
+              <img src="./images/Utilizar/chale-demais/Frente.webp" alt="Fachada do Chalé Demais da Conta" loading="lazy" />
+              <img src="./images/Utilizar/chale-demais/Varanda_1.webp" alt="Varanda do Chalé Demais da Conta" loading="lazy" />
+              <img src="./images/Utilizar/chale-demais/Varanda_2.webp" alt="Varanda do Chalé Demais da Conta" loading="lazy" />
+              <img src="./images/Utilizar/chale-demais/Dentro_Geral.webp" alt="Interior do Chalé Demais da Conta" loading="lazy" />
+              <img src="./images/Utilizar/chale-demais/Sofa.webp" alt="Sala do Chalé Demais da Conta" loading="lazy" />
+              <img src="./images/Utilizar/chale-demais/Quarto_1.webp" alt="Quarto do Chalé Demais da Conta" loading="lazy" />
+              <img src="./images/Utilizar/chale-demais/Quarto_2.webp" alt="Quarto do Chalé Demais da Conta" loading="lazy" />
+              <img src="./images/Utilizar/chale-demais/Cozinha_2.webp" alt="Cozinha equipada do Chalé Demais da Conta" loading="lazy" />
+              <img src="./images/Utilizar/chale-demais/Banheiro.webp" alt="Banheiro do Chalé Demais da Conta" loading="lazy" />
             </div>
             <button class="chale-card__nav chale-card__nav--prev" type="button" data-prev aria-label="Foto anterior">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
@@ -388,7 +449,7 @@
             <button class="chale-card__nav chale-card__nav--next" type="button" data-next aria-label="Próxima foto">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
             </button>
-            <span class="chale-card__counter" data-counter aria-live="polite">1 / 10</span>
+            <span class="chale-card__counter" data-counter aria-live="polite">1 / 9</span>
           </div>
           <div class="chale-card__body">
             <div class="chale-card__badges">
@@ -412,11 +473,15 @@
                  data-cta="chale-demais-whatsapp">
                 Reservar pelo WhatsApp
               </a>
-              <a class="btn-link" target="_blank" rel="noopener"
+              <div class="chale-card__sec">
+              <a class="btn btn--secondary btn--xs btn--stacked" target="_blank" rel="noopener"
                  href="https://www.airbnb.com.br/rooms/1216592617285512392"
                  data-cta="chale-demais-airbnb">
-                Ver no Airbnb →
+                <span>Ver no Airbnb →</span>
+                <span class="btn-sub">*Inclui taxa da plataforma</span>
               </a>
+              <a class="btn btn--secondary btn--xs" href="#valores">Consultar preço →</a>
+              </div>
             </div>
           </div>
         </article>
@@ -468,7 +533,7 @@
         <li>
           <svg class="feature-icon" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M16 9v7l4 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
           <h3>Check‑in cuidadoso</h3>
-          <p>Tania e Giovani recebem cada hóspede pessoalmente.</p>
+          <p>Check-in das 14h às 20h · Check-out até 12h. Tania e Giovani recebem cada hóspede pessoalmente.</p>
         </li>
       </ul>
     </div>
@@ -515,6 +580,11 @@
       <p class="valores__pet reveal">
         <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="8" cy="7" r="1.5" fill="currentColor"/><circle cx="16" cy="7" r="1.5" fill="currentColor"/><circle cx="6" cy="11" r="1.3" fill="currentColor"/><circle cx="18" cy="11" r="1.3" fill="currentColor"/><path d="M8 17c0-2.2 1.8-4 4-4s4 1.8 4 4c0 1.2-.8 2-2 2s-1-.4-2-.4-.5.4-2 .4-2-.8-2-2z" fill="currentColor"/></svg>
         Pets de pequeno porte são bem‑vindos · taxa de R$ 25 por diária
+      </p>
+
+      <p class="valores__pet reveal">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="8" r="3" fill="currentColor"/><path d="M6 20c0-3.4 2.7-6 6-6s6 2.6 6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        Crianças até 8 anos não pagam · limitado a 2 crianças por reserva
       </p>
 
       <div class="valores__cta reveal">
@@ -735,6 +805,150 @@
   </section>
 
 
+  <!-- ================== FAQ ================== -->
+  <section class="faq section" id="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <header class="section__head reveal">
+        <span class="eyebrow">Dúvidas</span>
+        <h2 id="faq-title" class="h2">Perguntas <em>frequentes.</em></h2>
+        <p class="lede">
+          O que a gente mais responde no WhatsApp. Se ficar qualquer dúvida, é só chamar.
+        </p>
+      </header>
+
+      <div class="faq__list reveal">
+
+        <details class="faq__item">
+          <summary class="faq__q">Como faço a reserva?</summary>
+          <div class="faq__a">
+            <p>Direto pelo WhatsApp, preenchendo a pré-reserva aqui no site, ou pelo link do Airbnb. Pelo Airbnb, o valor pode ser maior, pois inclui a taxa da plataforma.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">Quais são as formas de pagamento?</summary>
+          <div class="faq__a">
+            <p><strong>Reserva direta:</strong> Pix, com <strong>50% de sinal</strong> para garantir a data. O restante na chegada.</p>
+            <p><strong>Pelo Airbnb:</strong> o pagamento é processado pela plataforma, nas formas disponíveis lá. O valor pode sofrer alteração, pois pode incluir a taxa da plataforma.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">Como funciona o cancelamento?</summary>
+          <div class="faq__a">
+            <p>Nossa política é restrita: <strong>o sinal não é reembolsado e não há troca de datas</strong> após a confirmação. A data fica bloqueada exclusivamente para você.</p>
+            <p>Reservas feitas pelo Airbnb seguem a política da plataforma.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">O café da manhã está incluso?</summary>
+          <div class="faq__a">
+            <p>Não. Cada chalé tem <strong>cozinha própria equipada</strong>, para você fazer suas refeições no seu horário, com total autonomia.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">Aceitam pets?</summary>
+          <div class="faq__a">
+            <p>Sim. Pets de <strong>pequeno porte</strong>, com taxa de <strong>R$ 25 por diária</strong>.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">Qual o horário de check-in e check-out?</summary>
+          <div class="faq__a">
+            <p><strong>Check-in</strong> das 14h às 20h. <strong>Check-out</strong> até as 12h.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">Crianças pagam?</summary>
+          <div class="faq__a">
+            <p>Crianças <strong>até 8 anos não pagam</strong>, limitado a 2 por reserva. Acima dessa idade, contam como hóspedes.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">Quantas pessoas cabem em cada chalé?</summary>
+          <div class="faq__a">
+            <ul>
+              <li><strong>Pode-Cré:</strong> até 2 pessoas</li>
+              <li><strong>Uai-Só:</strong> até 4 pessoas</li>
+              <li><strong>Trem-Bão:</strong> até 4 pessoas</li>
+              <li><strong>Demais da Conta:</strong> de 4 a 8 pessoas</li>
+            </ul>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">A piscina e a sauna são privativas do chalé?</summary>
+          <div class="faq__a">
+            <p>Não. Piscina, sauna, sinuca e fogueira ficam na <strong>área comum</strong>, compartilhada entre os quatro chalés. Piscina das <strong>7h às 22h</strong>; horários da sauna a combinar com os anfitriões.</p>
+            <p>Privativos de cada chalé: varanda, cozinha, quarto e banheiro.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">Tem hidromassagem?</summary>
+          <div class="faq__a">
+            <p>Não. A propriedade tem <strong>sauna</strong>, na área comum, com horários a combinar com os anfitriões.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">Tem wi-fi nos chalés?</summary>
+          <div class="faq__a">
+            <p>Sim. O wi-fi atende <strong>todos os chalés e a área comum</strong>.</p>
+            <p>Já o sinal de celular pode oscilar na estrada e em alguns pontos da região, variando conforme a operadora.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">Qual a distância até o Parque e até a Vila?</summary>
+          <div class="faq__a">
+            <p><strong>5 minutos</strong> da Vila e <strong>7 minutos</strong> do Parque Estadual. As principais cachoeiras ficam a poucos minutos.</p>
+            <p class="faq__nota">A visitação do Parque tem limite diário de visitantes e exige agendamento antecipado pelo <a href="https://lpv.parquedoibitipoca.com.br/" target="_blank" rel="noopener">site oficial do parque</a>.</p>
+          </div>
+        </details>
+
+        <details class="faq__item">
+          <summary class="faq__q">Quanto custa a diária?</summary>
+          <div class="faq__a">
+            <p>Para casal: <strong>R$ 300</strong> a diária avulsa e <strong>R$ 250</strong> por diária a partir de 2 noites. Chalés maiores e datas específicas podem variar. Consulte disponibilidade pelo WhatsApp.</p>
+          </div>
+        </details>
+
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQPage: ajuda o Google e as buscas por IA a mostrarem essas respostas direto.
+       Manter em sincronia com as perguntas visiveis acima. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"Como faço a reserva?","acceptedAnswer":{"@type":"Answer","text":"Direto pelo WhatsApp, preenchendo a pré-reserva no site, ou pelo link do Airbnb. Pelo Airbnb, o valor pode ser maior, pois inclui a taxa da plataforma."}},
+      {"@type":"Question","name":"Quais são as formas de pagamento?","acceptedAnswer":{"@type":"Answer","text":"Reserva direta: Pix, com 50% de sinal para garantir a data. O restante na chegada. Pelo Airbnb, o pagamento é processado pela plataforma, nas formas disponíveis lá, e o valor pode sofrer alteração pois pode incluir a taxa da plataforma."}},
+      {"@type":"Question","name":"Como funciona o cancelamento?","acceptedAnswer":{"@type":"Answer","text":"A política é restrita: o sinal não é reembolsado e não há troca de datas após a confirmação. Reservas feitas pelo Airbnb seguem a política da plataforma."}},
+      {"@type":"Question","name":"O café da manhã está incluso?","acceptedAnswer":{"@type":"Answer","text":"Não. Cada chalé tem cozinha própria equipada, para você fazer suas refeições no seu horário, com total autonomia."}},
+      {"@type":"Question","name":"Aceitam pets?","acceptedAnswer":{"@type":"Answer","text":"Sim. Pets de pequeno porte, com taxa de R$ 25 por diária."}},
+      {"@type":"Question","name":"Qual o horário de check-in e check-out?","acceptedAnswer":{"@type":"Answer","text":"Check-in das 14h às 20h. Check-out até as 12h."}},
+      {"@type":"Question","name":"Crianças pagam?","acceptedAnswer":{"@type":"Answer","text":"Crianças até 8 anos não pagam, limitado a 2 por reserva. Acima dessa idade, contam como hóspedes."}},
+      {"@type":"Question","name":"Quantas pessoas cabem em cada chalé?","acceptedAnswer":{"@type":"Answer","text":"Pode-Cré até 2 pessoas, Uai-Só até 4, Trem-Bão até 4 e Demais da Conta de 4 a 8 pessoas."}},
+      {"@type":"Question","name":"A piscina e a sauna são privativas do chalé?","acceptedAnswer":{"@type":"Answer","text":"Não. Piscina, sauna, sinuca e fogueira ficam na área comum, compartilhada entre os quatro chalés. A piscina funciona das 7h às 22h e os horários da sauna são combinados com os anfitriões."}},
+      {"@type":"Question","name":"Tem hidromassagem?","acceptedAnswer":{"@type":"Answer","text":"Não. A propriedade tem sauna, na área comum, com horários a combinar com os anfitriões."}},
+      {"@type":"Question","name":"Tem wi-fi nos chalés?","acceptedAnswer":{"@type":"Answer","text":"Sim. O wi-fi atende todos os chalés e a área comum. Já o sinal de celular pode oscilar na estrada e em alguns pontos da região, variando conforme a operadora."}},
+      {"@type":"Question","name":"Qual a distância até o Parque e até a Vila?","acceptedAnswer":{"@type":"Answer","text":"5 minutos da Vila de Conceição da Ibitipoca e 7 minutos do Parque Estadual do Ibitipoca. A visitação do Parque tem limite diário de visitantes e exige agendamento antecipado pelo site oficial."}},
+      {"@type":"Question","name":"Quanto custa a diária?","acceptedAnswer":{"@type":"Answer","text":"Para casal: R$ 300 a diária avulsa e R$ 250 por diária a partir de 2 noites. Chalés maiores e datas específicas podem variar."}}
+    ]
+  }
+  </script>
+
+
   <!-- ================== CTA FINAL ================== -->
   <section class="cta-final section section--wood" aria-labelledby="cta-title">
     <div class="container cta-final__inner reveal">
@@ -806,6 +1020,83 @@
      data-cta="floating-whatsapp">
     <svg viewBox="0 0 24 24" width="28" height="28" aria-hidden="true"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.86 9.86 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01A9.82 9.82 0 0 0 12.04 2zm4.52 13.99c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.12-.16.25-.64.81-.78.97-.14.16-.29.18-.54.06-.25-.12-1.04-.38-1.99-1.22-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.39.11-.51.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.4-.42-.56-.42-.14-.01-.31-.01-.48-.01s-.43.06-.66.31c-.23.25-.86.84-.86 2.06s.88 2.39 1 2.55c.12.16 1.74 2.66 4.21 3.73.59.25 1.04.4 1.4.52.59.19 1.12.16 1.55.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.08.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg>
   </a>
+
+  <!-- ================== LIGHTBOX (foto em tamanho real) ================== -->
+  <div class="lightbox" id="lightbox" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-label="Foto ampliada">
+    <div class="lightbox__overlay" data-fechar-lightbox></div>
+    <button class="lightbox__close" type="button" data-fechar-lightbox aria-label="Fechar foto">&times;</button>
+    <button class="lightbox__nav lightbox__nav--prev" type="button" data-lb-prev aria-label="Foto anterior">
+      <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <figure class="lightbox__fig">
+      <img class="lightbox__img" id="lightbox-img" src="" alt="" />
+      <figcaption class="lightbox__cap"><span id="lightbox-cap"></span> <span class="lightbox__contador" id="lightbox-contador"></span></figcaption>
+    </figure>
+    <button class="lightbox__nav lightbox__nav--next" type="button" data-lb-next aria-label="Próxima foto">
+      <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+
+  <!-- ================== MODAL PRÉ-RESERVA ================== -->
+  <div class="prereserva" id="prereserva" hidden role="dialog" aria-modal="true" aria-labelledby="prereserva-titulo">
+    <div class="prereserva__overlay" data-fechar-modal></div>
+    <div class="prereserva__box">
+      <button type="button" class="prereserva__close" data-fechar-modal aria-label="Fechar">&times;</button>
+      <h2 class="prereserva__titulo" id="prereserva-titulo">Pré-reserva</h2>
+      <p class="prereserva__sub">Preencha os dados abaixo para ser direcionado ao atendimento.</p>
+
+      <form class="prereserva__form" id="prereserva-form">
+        <label class="prereserva__label">
+          Nome
+          <input type="text" name="nome" required placeholder="Seu nome" autocomplete="name">
+        </label>
+
+        <label class="prereserva__label">
+          Seu WhatsApp
+          <input type="tel" name="whatsapp" required placeholder="(00) 00000-0000" autocomplete="tel">
+        </label>
+
+        <label class="prereserva__label">
+          Chalé
+          <select name="chale" id="prereserva-chale" required>
+            <option value="Ainda não escolhi">Ainda não escolhi</option>
+            <option value="Chalé Pode-Cré">Chalé Pode-Cré</option>
+            <option value="Chalé Uai-Só">Chalé Uai-Só</option>
+            <option value="Chalé Trem-Bão">Chalé Trem-Bão</option>
+            <option value="Chalé Demais da Conta">Chalé Demais da Conta</option>
+          </select>
+        </label>
+
+        <div class="prereserva__row">
+          <label class="prereserva__label">
+            Check-in
+            <input type="date" name="checkin" required>
+          </label>
+          <label class="prereserva__label">
+            Check-out
+            <input type="date" name="checkout" required>
+          </label>
+        </div>
+
+        <label class="prereserva__label">
+          Hóspedes
+          <select name="hospedes" required>
+            <option value="1">1</option>
+            <option value="2" selected>2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6 ou mais">6 ou mais</option>
+          </select>
+        </label>
+
+        <p class="prereserva__nota">🕐 Check-in das 14h às 20h · Check-out até 12h</p>
+
+        <button type="submit" class="prereserva__enviar">Enviar pré-reserva</button>
+        <p class="prereserva__aviso">A reserva só é confirmada após a continuidade do atendimento via WhatsApp.</p>
+      </form>
+    </div>
+  </div>
 
   <script src="./script.js" defer></script>
 </body>
