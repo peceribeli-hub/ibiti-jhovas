@@ -415,10 +415,28 @@
         '\n📅 Check-in: ' + dados.checkin +
         '\n📅 Check-out: ' + dados.checkout +
         '\n👥 Hóspedes: ' + dados.hospedes;
-      window.open('https://wa.me/' + WHATS + '?text=' + encodeURIComponent(msg), '_blank');
+      const url = 'https://wa.me/' + WHATS + '?text=' + encodeURIComponent(msg);
 
-      fechar();
-      form.reset();
+      // Navegação direta, não abertura de aba nova: o Safari do iPhone trata
+      // window.open como pop-up e bloqueia, e aí a pessoa perdia tudo que digitou.
+      window.location.href = url;
+
+      // Plano B: se em 1,2s ainda estivermos aqui, o navegador barrou.
+      // Mostra um link de verdade (toque em link nunca é bloqueado) e
+      // NÃO limpa o formulário, pra pessoa não perder o que preencheu.
+      setTimeout(() => {
+        if (document.hidden || modal.hidden) return;   // já saiu daqui, deu certo
+        if (modal.querySelector('[data-plano-b]')) return;
+        const aviso = document.createElement('p');
+        aviso.setAttribute('data-plano-b', '');
+        aviso.className = 'prereserva__aviso';
+        aviso.innerHTML =
+          'Seus dados já foram enviados. ' +
+          '<a href="' + url.replace(/"/g, '&quot;') + '" target="_blank" rel="noopener" ' +
+          'style="color:var(--terracotta-deep);font-weight:700;text-decoration:underline">' +
+          'Toque aqui para abrir o WhatsApp</a>';
+        form.appendChild(aviso);
+      }, 1200);
     });
   })();
 
