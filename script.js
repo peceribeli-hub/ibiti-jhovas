@@ -143,6 +143,34 @@
   }
 
 
+  /* ---------------- Carregamento sob demanda das fotos ----------------
+     Só a 1ª foto de cada carrossel vem no HTML. As outras têm data-src e
+     entram quando a pessoa passa a foto ou abre o lightbox. Isso derruba
+     o peso do primeiro carregamento sem tirar nada do site. */
+  const hidratar = (raiz) => {
+    (raiz || document).querySelectorAll('img[data-src]').forEach(img => {
+      const s = img.getAttribute('data-src');
+      const ss = img.getAttribute('data-srcset');
+      if (ss) img.srcset = ss;
+      if (s) img.src = s;
+      img.removeAttribute('data-src');
+      img.removeAttribute('data-srcset');
+    });
+  };
+  window.hidratarFotos = hidratar;
+
+  // Rede de segurança: se nada disso disparar, carrega tudo bem depois,
+  // pra nenhuma foto ficar presa. Os 8s são de propósito: já passou muito
+  // do carregamento inicial, então não disputa banda com o que importa.
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const depois = () => hidratar(document);
+      if ('requestIdleCallback' in window) requestIdleCallback(depois, { timeout: 4000 });
+      else depois();
+    }, 8000);
+  });
+
+
   /* ---------------- Mini-carrosseis dos chalés ---------------- */
   document.querySelectorAll('[data-gallery]').forEach(gallery => {
     const track = gallery.querySelector('[data-track]');
@@ -162,12 +190,23 @@
       if (btnNext) btnNext.disabled = idx >= total - 1;
     };
 
+    // Ao primeiro toque/clique no carrossel, carrega as fotos restantes dele.
+    // Nada de 'pointerenter': passar o mouse por cima não é intenção de ver as
+    // fotos, e ao rolar a página o ponteiro cruzaria todos os cards de uma vez.
+    const acordar = () => hidratar(gallery);
+    ['pointerdown','touchstart','focusin'].forEach(ev =>
+      gallery.addEventListener(ev, acordar, { once: true, passive: true }));
+    // rolar o próprio carrossel para o lado também conta como intenção
+    track.addEventListener('scroll', acordar, { once: true, passive: true });
+
     if (btnPrev) btnPrev.addEventListener('click', (e) => {
       e.preventDefault();
+      acordar();
       track.scrollBy({ left: -track.clientWidth, behavior: 'smooth' });
     });
     if (btnNext) btnNext.addEventListener('click', (e) => {
       e.preventDefault();
+      acordar();
       track.scrollBy({ left: track.clientWidth, behavior: 'smooth' });
     });
 
@@ -196,10 +235,16 @@
     let idx = 0;
     let origem = null; // pra devolver o foco ao fechar
 
+    // o card usa a versão pequena (srcset); ampliado tem que usar a maior
+    const versaoGrande = (img) => {
+      const base = img.getAttribute('data-src') || img.getAttribute('src') || '';
+      return base.replace(/-(?:400|800)\.webp$/, '.webp');
+    };
+
     const mostrar = () => {
       const img = fotos[idx];
       if (!img) return;
-      lbImg.src = img.currentSrc || img.src;
+      lbImg.src = versaoGrande(img);
       lbImg.alt = img.alt || '';
       if (lbCap) lbCap.textContent = img.alt || '';
       if (lbCon) lbCon.textContent = fotos.length > 1 ? `(${idx + 1} de ${fotos.length})` : '';
@@ -208,6 +253,8 @@
     };
 
     const abrir = (galeria, img) => {
+      // garante que as fotos adiadas dessa galeria já tenham src antes de ampliar
+      if (window.hidratarFotos) window.hidratarFotos(galeria);
       fotos = Array.from(galeria.querySelectorAll('[data-track] img'));
       idx = Math.max(0, fotos.indexOf(img));
       origem = img;

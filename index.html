@@ -15,7 +15,7 @@
 
   <title>Ibiti Jhovas Chalés · Refúgio em Conceição da Ibitipoca, MG</title>
   <meta name="description" content="Quatro chalés completos a 5 minutos da Vila e 7 do Parque Estadual de Ibitipoca. Aconchego, silêncio e a hospitalidade de Tânia & Giovani." />
-  <link rel="canonical" href="/" />
+  <link rel="canonical" href="https://ibitijhovas.vercel.app/" />
 
   <!-- Open Graph / redes sociais -->
   <meta property="og:type" content="website" />
@@ -27,13 +27,20 @@
   <!-- Favicon (placeholder usa o logo enviado) -->
   <link rel="icon" type="image/webp" href="./images/logo.webp" />
 
-  <!-- Fontes -->
+  <!-- Fontes: carregam SEM travar a tela. O texto aparece na hora com a fonte
+       do sistema e troca pela definitiva quando chega (economia de ~2,9s no 4G). -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Manrope:wght@300..700&display=swap" />
+  <link rel="stylesheet" media="print" onload="this.media='all'"
+        href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Manrope:wght@300..700&display=swap" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Manrope:wght@300..700&display=swap" />
+  </noscript>
 
-  <!-- Preload da imagem do hero (acelera o LCP no tráfego pago) -->
-  <link rel="preload" as="image" href="./images/Utilizar/Hero/hero.webp" />
+  <!-- Preload do hero na versão que o celular realmente usa (acelera o LCP) -->
+  <link rel="preload" as="image" href="./images/Utilizar/Hero/hero.webp"
+        imagesrcset="./images/Utilizar/Hero/hero-400.webp 400w, ./images/Utilizar/Hero/hero-800.webp 800w, ./images/Utilizar/Hero/hero.webp 1200w"
+        imagesizes="100vw" />
 
   <link rel="stylesheet" href="./styles.css" />
 
@@ -126,7 +133,7 @@
   <!-- ================== HERO ================== -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__media">
-      <img src="./images/Utilizar/Hero/hero.webp" alt="Vista dos Ibiti Jhovas Chalés em Conceição da Ibitipoca" fetchpriority="high" />
+      <img src="./images/Utilizar/Hero/hero.webp" srcset="./images/Utilizar/Hero/hero-400.webp 400w, ./images/Utilizar/Hero/hero-800.webp 800w, ./images/Utilizar/Hero/hero.webp 1200w" sizes="100vw" alt="Vista dos Ibiti Jhovas Chalés em Conceição da Ibitipoca" fetchpriority="high" />
       <div class="hero__media-overlay" aria-hidden="true"></div>
     </div>
 
@@ -228,15 +235,15 @@
 
       <figure class="intro__photo intro__photo--gallery" data-gallery>
         <div class="intro__photo-track" data-track>
-              <img src="./images/Utilizar/area/Piscina.webp" alt="Piscina da área comum dos Ibiti Jhovas Chalés" loading="lazy" />
-              <img src="./images/Utilizar/area/Fogueira.webp" alt="Fogueira acesa no espaço comum" loading="lazy" />
-              <img src="./images/Utilizar/area/Sauna.webp" alt="Sauna da área comum" loading="lazy" />
-              <img src="./images/Utilizar/area/Sinuca_1.webp" alt="Mesa de sinuca da área comum" loading="lazy" />
-              <img src="./images/Utilizar/area/Sinuca_2.webp" alt="Mesa de sinuca no espaço comum" loading="lazy" />
-              <img src="./images/Utilizar/area/Rede.webp" alt="Rede para descanso na área comum" loading="lazy" />
-              <img src="./images/Utilizar/area/Vinhos.webp" alt="Adega com seleção de vinhos" loading="lazy" />
-              <img src="./images/Utilizar/area/Banco%20caixa%20dagua.webp" alt="Banco no jardim da área comum" loading="lazy" />
-              <img src="./images/Utilizar/area/Ca%CC%83ofitrio%CC%83es.webp" alt="Cãofitriões" loading="lazy" />
+              <img src="./images/Utilizar/area/Piscina.webp" srcset="./images/Utilizar/area/Piscina-400.webp 400w, ./images/Utilizar/area/Piscina-800.webp 800w, ./images/Utilizar/area/Piscina.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Piscina da área comum dos Ibiti Jhovas Chalés" loading="lazy" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/area/Fogueira.webp" data-srcset="./images/Utilizar/area/Fogueira-400.webp 400w, ./images/Utilizar/area/Fogueira-800.webp 800w, ./images/Utilizar/area/Fogueira.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Fogueira acesa no espaço comum" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/area/Sauna.webp" data-srcset="./images/Utilizar/area/Sauna-400.webp 400w, ./images/Utilizar/area/Sauna-800.webp 800w, ./images/Utilizar/area/Sauna.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Sauna da área comum" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/area/Sinuca_1.webp" data-srcset="./images/Utilizar/area/Sinuca_1-400.webp 400w, ./images/Utilizar/area/Sinuca_1-800.webp 800w, ./images/Utilizar/area/Sinuca_1.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Mesa de sinuca da área comum" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/area/Sinuca_2.webp" data-srcset="./images/Utilizar/area/Sinuca_2-400.webp 400w, ./images/Utilizar/area/Sinuca_2-800.webp 800w, ./images/Utilizar/area/Sinuca_2.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Mesa de sinuca no espaço comum" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/area/Rede.webp" data-srcset="./images/Utilizar/area/Rede-400.webp 400w, ./images/Utilizar/area/Rede-800.webp 800w, ./images/Utilizar/area/Rede.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Rede para descanso na área comum" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/area/Vinhos.webp" data-srcset="./images/Utilizar/area/Vinhos-400.webp 400w, ./images/Utilizar/area/Vinhos-800.webp 800w, ./images/Utilizar/area/Vinhos.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Adega com seleção de vinhos" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/area/Banco%20caixa%20dagua.webp" data-srcset="./images/Utilizar/area/Banco%20caixa%20dagua-400.webp 400w, ./images/Utilizar/area/Banco%20caixa%20dagua-800.webp 800w, ./images/Utilizar/area/Banco%20caixa%20dagua.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Banco no jardim da área comum" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/area/Ca%CC%83ofitrio%CC%83es.webp" data-srcset="./images/Utilizar/area/Ca%CC%83ofitrio%CC%83es-400.webp 400w, ./images/Utilizar/area/Ca%CC%83ofitrio%CC%83es-800.webp 800w, ./images/Utilizar/area/Ca%CC%83ofitrio%CC%83es.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Cãofitriões" />
             </div>
         <button class="intro__photo-nav intro__photo-nav--prev" type="button" data-prev aria-label="Foto anterior">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
@@ -270,13 +277,13 @@
         <article class="chale-card reveal">
           <div class="chale-card__media chale-card__gallery" data-gallery>
             <div class="chale-card__track" data-track>
-              <img src="./images/Utilizar/chale-pode-cre/Frente.webp" alt="Fachada do Chalé Pode Crê" loading="lazy" />
-              <img src="./images/Utilizar/chale-pode-cre/Vista.webp" alt="Vista a partir do Chalé Pode Crê" loading="lazy" />
-              <img src="./images/Utilizar/chale-pode-cre/Quarto.webp" alt="Quarto do Chalé Pode Crê" loading="lazy" />
-              <img src="./images/Utilizar/chale-pode-cre/Cozinha_1.webp" alt="Cozinha equipada do Chalé Pode Crê" loading="lazy" />
-              <img src="./images/Utilizar/chale-pode-cre/Cozinha_2.webp" alt="Cozinha equipada do Chalé Pode Crê" loading="lazy" />
-              <img src="./images/Utilizar/chale-pode-cre/Cozinha_3.webp" alt="Cozinha equipada do Chalé Pode Crê" loading="lazy" />
-              <img src="./images/Utilizar/chale-pode-cre/Banheiro.webp" alt="Banheiro do Chalé Pode Crê" loading="lazy" />
+              <img src="./images/Utilizar/chale-pode-cre/Frente.webp" srcset="./images/Utilizar/chale-pode-cre/Frente-400.webp 400w, ./images/Utilizar/chale-pode-cre/Frente-800.webp 800w, ./images/Utilizar/chale-pode-cre/Frente.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Fachada do Chalé Pode Crê" loading="lazy" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-pode-cre/Vista.webp" data-srcset="./images/Utilizar/chale-pode-cre/Vista-400.webp 400w, ./images/Utilizar/chale-pode-cre/Vista-800.webp 800w, ./images/Utilizar/chale-pode-cre/Vista.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Vista a partir do Chalé Pode Crê" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-pode-cre/Quarto.webp" data-srcset="./images/Utilizar/chale-pode-cre/Quarto-400.webp 400w, ./images/Utilizar/chale-pode-cre/Quarto-800.webp 800w, ./images/Utilizar/chale-pode-cre/Quarto.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Quarto do Chalé Pode Crê" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-pode-cre/Cozinha_1.webp" data-srcset="./images/Utilizar/chale-pode-cre/Cozinha_1-400.webp 400w, ./images/Utilizar/chale-pode-cre/Cozinha_1-800.webp 800w, ./images/Utilizar/chale-pode-cre/Cozinha_1.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Cozinha equipada do Chalé Pode Crê" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-pode-cre/Cozinha_2.webp" data-srcset="./images/Utilizar/chale-pode-cre/Cozinha_2-400.webp 400w, ./images/Utilizar/chale-pode-cre/Cozinha_2-800.webp 800w, ./images/Utilizar/chale-pode-cre/Cozinha_2.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Cozinha equipada do Chalé Pode Crê" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-pode-cre/Cozinha_3.webp" data-srcset="./images/Utilizar/chale-pode-cre/Cozinha_3-400.webp 400w, ./images/Utilizar/chale-pode-cre/Cozinha_3-800.webp 800w, ./images/Utilizar/chale-pode-cre/Cozinha_3.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Cozinha equipada do Chalé Pode Crê" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-pode-cre/Banheiro.webp" data-srcset="./images/Utilizar/chale-pode-cre/Banheiro-400.webp 400w, ./images/Utilizar/chale-pode-cre/Banheiro-800.webp 800w, ./images/Utilizar/chale-pode-cre/Banheiro.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Banheiro do Chalé Pode Crê" />
             </div>
             <button class="chale-card__nav chale-card__nav--prev" type="button" data-prev aria-label="Foto anterior">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
@@ -325,12 +332,12 @@
         <article class="chale-card reveal">
           <div class="chale-card__media chale-card__gallery" data-gallery>
             <div class="chale-card__track" data-track>
-              <img src="./images/Utilizar/chale-uai-so/Frente.webp" alt="Fachada do Chalé Uai Sô" loading="lazy" />
-              <img src="./images/Utilizar/chale-uai-so/Varanda.webp" alt="Varanda do Chalé Uai Sô" loading="lazy" />
-              <img src="./images/Utilizar/chale-uai-so/Dentro_Geral.webp" alt="Interior do Chalé Uai Sô" loading="lazy" />
-              <img src="./images/Utilizar/chale-uai-so/Cama.webp" alt="Quarto do Chalé Uai Sô" loading="lazy" />
-              <img src="./images/Utilizar/chale-uai-so/Cozinha.webp" alt="Cozinha equipada do Chalé Uai Sô" loading="lazy" />
-              <img src="./images/Utilizar/chale-uai-so/Banheiro.webp" alt="Banheiro do Chalé Uai Sô" loading="lazy" />
+              <img src="./images/Utilizar/chale-uai-so/Frente.webp" srcset="./images/Utilizar/chale-uai-so/Frente-400.webp 400w, ./images/Utilizar/chale-uai-so/Frente-800.webp 800w, ./images/Utilizar/chale-uai-so/Frente.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Fachada do Chalé Uai Sô" loading="lazy" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-uai-so/Varanda.webp" data-srcset="./images/Utilizar/chale-uai-so/Varanda-400.webp 400w, ./images/Utilizar/chale-uai-so/Varanda-800.webp 800w, ./images/Utilizar/chale-uai-so/Varanda.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Varanda do Chalé Uai Sô" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-uai-so/Dentro_Geral.webp" data-srcset="./images/Utilizar/chale-uai-so/Dentro_Geral-400.webp 400w, ./images/Utilizar/chale-uai-so/Dentro_Geral-800.webp 800w, ./images/Utilizar/chale-uai-so/Dentro_Geral.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Interior do Chalé Uai Sô" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-uai-so/Cama.webp" data-srcset="./images/Utilizar/chale-uai-so/Cama-400.webp 400w, ./images/Utilizar/chale-uai-so/Cama-800.webp 800w, ./images/Utilizar/chale-uai-so/Cama.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Quarto do Chalé Uai Sô" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-uai-so/Cozinha.webp" data-srcset="./images/Utilizar/chale-uai-so/Cozinha-400.webp 400w, ./images/Utilizar/chale-uai-so/Cozinha-800.webp 800w, ./images/Utilizar/chale-uai-so/Cozinha.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Cozinha equipada do Chalé Uai Sô" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-uai-so/Banheiro.webp" data-srcset="./images/Utilizar/chale-uai-so/Banheiro-400.webp 400w, ./images/Utilizar/chale-uai-so/Banheiro-800.webp 800w, ./images/Utilizar/chale-uai-so/Banheiro.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Banheiro do Chalé Uai Sô" />
             </div>
             <button class="chale-card__nav chale-card__nav--prev" type="button" data-prev aria-label="Foto anterior">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
@@ -379,12 +386,12 @@
         <article class="chale-card reveal">
           <div class="chale-card__media chale-card__gallery" data-gallery>
             <div class="chale-card__track" data-track>
-              <img src="./images/Utilizar/chale-trem-bao/Frente.webp" alt="Fachada do Chalé Trem Bão" loading="lazy" />
-              <img src="./images/Utilizar/chale-trem-bao/Varanda.webp" alt="Varanda do Chalé Trem Bão" loading="lazy" />
-              <img src="./images/Utilizar/chale-trem-bao/Dentro_Geral.webp" alt="Interior do Chalé Trem Bão" loading="lazy" />
-              <img src="./images/Utilizar/chale-trem-bao/Cozinha_1.webp" alt="Cozinha equipada do Chalé Trem Bão" loading="lazy" />
-              <img src="./images/Utilizar/chale-trem-bao/Cozinha_2.webp" alt="Cozinha equipada do Chalé Trem Bão" loading="lazy" />
-              <img src="./images/Utilizar/chale-trem-bao/Banheiro.webp" alt="Banheiro do Chalé Trem Bão" loading="lazy" />
+              <img src="./images/Utilizar/chale-trem-bao/Frente.webp" srcset="./images/Utilizar/chale-trem-bao/Frente-400.webp 400w, ./images/Utilizar/chale-trem-bao/Frente-800.webp 800w, ./images/Utilizar/chale-trem-bao/Frente.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Fachada do Chalé Trem Bão" loading="lazy" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-trem-bao/Varanda.webp" data-srcset="./images/Utilizar/chale-trem-bao/Varanda-400.webp 400w, ./images/Utilizar/chale-trem-bao/Varanda-800.webp 800w, ./images/Utilizar/chale-trem-bao/Varanda.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Varanda do Chalé Trem Bão" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-trem-bao/Dentro_Geral.webp" data-srcset="./images/Utilizar/chale-trem-bao/Dentro_Geral-400.webp 400w, ./images/Utilizar/chale-trem-bao/Dentro_Geral-800.webp 800w, ./images/Utilizar/chale-trem-bao/Dentro_Geral.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Interior do Chalé Trem Bão" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-trem-bao/Cozinha_1.webp" data-srcset="./images/Utilizar/chale-trem-bao/Cozinha_1-400.webp 400w, ./images/Utilizar/chale-trem-bao/Cozinha_1-800.webp 800w, ./images/Utilizar/chale-trem-bao/Cozinha_1.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Cozinha equipada do Chalé Trem Bão" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-trem-bao/Cozinha_2.webp" data-srcset="./images/Utilizar/chale-trem-bao/Cozinha_2-400.webp 400w, ./images/Utilizar/chale-trem-bao/Cozinha_2-800.webp 800w, ./images/Utilizar/chale-trem-bao/Cozinha_2.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Cozinha equipada do Chalé Trem Bão" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-trem-bao/Banheiro.webp" data-srcset="./images/Utilizar/chale-trem-bao/Banheiro-400.webp 400w, ./images/Utilizar/chale-trem-bao/Banheiro-800.webp 800w, ./images/Utilizar/chale-trem-bao/Banheiro.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Banheiro do Chalé Trem Bão" />
             </div>
             <button class="chale-card__nav chale-card__nav--prev" type="button" data-prev aria-label="Foto anterior">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
@@ -433,15 +440,15 @@
         <article class="chale-card reveal">
           <div class="chale-card__media chale-card__gallery" data-gallery>
             <div class="chale-card__track" data-track>
-              <img src="./images/Utilizar/chale-demais/Frente.webp" alt="Fachada do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/Utilizar/chale-demais/Varanda_1.webp" alt="Varanda do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/Utilizar/chale-demais/Varanda_2.webp" alt="Varanda do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/Utilizar/chale-demais/Dentro_Geral.webp" alt="Interior do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/Utilizar/chale-demais/Sofa.webp" alt="Sala do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/Utilizar/chale-demais/Quarto_1.webp" alt="Quarto do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/Utilizar/chale-demais/Quarto_2.webp" alt="Quarto do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/Utilizar/chale-demais/Cozinha_2.webp" alt="Cozinha equipada do Chalé Demais da Conta" loading="lazy" />
-              <img src="./images/Utilizar/chale-demais/Banheiro.webp" alt="Banheiro do Chalé Demais da Conta" loading="lazy" />
+              <img src="./images/Utilizar/chale-demais/Frente.webp" srcset="./images/Utilizar/chale-demais/Frente-400.webp 400w, ./images/Utilizar/chale-demais/Frente-800.webp 800w, ./images/Utilizar/chale-demais/Frente.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Fachada do Chalé Demais da Conta" loading="lazy" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-demais/Varanda_1.webp" data-srcset="./images/Utilizar/chale-demais/Varanda_1-400.webp 400w, ./images/Utilizar/chale-demais/Varanda_1-800.webp 800w, ./images/Utilizar/chale-demais/Varanda_1.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Varanda do Chalé Demais da Conta" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-demais/Varanda_2.webp" data-srcset="./images/Utilizar/chale-demais/Varanda_2-400.webp 400w, ./images/Utilizar/chale-demais/Varanda_2-800.webp 800w, ./images/Utilizar/chale-demais/Varanda_2.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Varanda do Chalé Demais da Conta" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-demais/Dentro_Geral.webp" data-srcset="./images/Utilizar/chale-demais/Dentro_Geral-400.webp 400w, ./images/Utilizar/chale-demais/Dentro_Geral-800.webp 800w, ./images/Utilizar/chale-demais/Dentro_Geral.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Interior do Chalé Demais da Conta" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-demais/Sofa.webp" data-srcset="./images/Utilizar/chale-demais/Sofa-400.webp 400w, ./images/Utilizar/chale-demais/Sofa-800.webp 800w, ./images/Utilizar/chale-demais/Sofa.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Sala do Chalé Demais da Conta" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-demais/Quarto_1.webp" data-srcset="./images/Utilizar/chale-demais/Quarto_1-400.webp 400w, ./images/Utilizar/chale-demais/Quarto_1-800.webp 800w, ./images/Utilizar/chale-demais/Quarto_1.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Quarto do Chalé Demais da Conta" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-demais/Quarto_2.webp" data-srcset="./images/Utilizar/chale-demais/Quarto_2-400.webp 400w, ./images/Utilizar/chale-demais/Quarto_2-800.webp 800w, ./images/Utilizar/chale-demais/Quarto_2.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Quarto do Chalé Demais da Conta" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-demais/Cozinha_2.webp" data-srcset="./images/Utilizar/chale-demais/Cozinha_2-400.webp 400w, ./images/Utilizar/chale-demais/Cozinha_2-800.webp 800w, ./images/Utilizar/chale-demais/Cozinha_2.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Cozinha equipada do Chalé Demais da Conta" />
+              <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" data-src="./images/Utilizar/chale-demais/Banheiro.webp" data-srcset="./images/Utilizar/chale-demais/Banheiro-400.webp 400w, ./images/Utilizar/chale-demais/Banheiro-800.webp 800w, ./images/Utilizar/chale-demais/Banheiro.webp 1200w" sizes="(max-width: 960px) 92vw, 45vw" alt="Banheiro do Chalé Demais da Conta" />
             </div>
             <button class="chale-card__nav chale-card__nav--prev" type="button" data-prev aria-label="Foto anterior">
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6"/></svg>
