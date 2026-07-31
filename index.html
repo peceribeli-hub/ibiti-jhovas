@@ -31,15 +31,17 @@
        conversar com dois domínios externos e fazia o texto trocar de fonte
        DEPOIS da página aparecer (CLS de 0,459 no WebPageTest).
        Agora chegam junto com a página e o texto já nasce certo. -->
+  <!-- Só as duas que desenham a primeira tela (47 KB). As outras entram
+       depois, sem disputar banda com a imagem do hero, que é o que o LCP mede. -->
   <link rel="preload" as="font" type="font/woff2" crossorigin
         href="./fonts/manrope-normal-latin.woff2" />
   <link rel="preload" as="font" type="font/woff2" crossorigin
-        href="./fonts/newsreader-normal-latin.woff2" />
+        href="./fonts/newsreader-600.woff2" />
 
   <!-- Preload do hero na versão que o celular realmente usa (acelera o LCP) -->
   <link rel="preload" as="image" href="./images/Utilizar/Hero/hero.webp"
         imagesrcset="./images/Utilizar/Hero/hero-400.webp 400w, ./images/Utilizar/Hero/hero-800.webp 800w, ./images/Utilizar/Hero/hero.webp 1200w"
-        imagesizes="100vw" />
+        imagesizes="(max-width: 900px) 55vw, 100vw" />
 
   <link rel="stylesheet" href="./styles.css" />
 
@@ -132,7 +134,7 @@
   <!-- ================== HERO ================== -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__media">
-      <img src="./images/Utilizar/Hero/hero.webp" srcset="./images/Utilizar/Hero/hero-400.webp 400w, ./images/Utilizar/Hero/hero-800.webp 800w, ./images/Utilizar/Hero/hero.webp 1200w" sizes="100vw" alt="Vista dos Ibiti Jhovas Chalés em Conceição da Ibitipoca" fetchpriority="high" />
+      <img src="./images/Utilizar/Hero/hero.webp" srcset="./images/Utilizar/Hero/hero-400.webp 400w, ./images/Utilizar/Hero/hero-800.webp 800w, ./images/Utilizar/Hero/hero.webp 1200w" sizes="(max-width: 900px) 55vw, 100vw" alt="Vista dos Ibiti Jhovas Chalés em Conceição da Ibitipoca" fetchpriority="high" />
       <div class="hero__media-overlay" aria-hidden="true"></div>
     </div>
 
@@ -165,8 +167,8 @@
 
         <ul class="hero__trust" aria-label="Avaliações">
           <li>
-            <strong>★ 4.9</strong>
-            <span>+30 avaliações</span>
+            <strong>★ 5,0</strong>
+            <span>49 avaliações no Google</span>
           </li>
           <li class="hero__trust-sep" aria-hidden="true"></li>
           <li>
