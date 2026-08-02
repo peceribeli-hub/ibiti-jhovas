@@ -355,8 +355,48 @@
     };
     let origemAtual = 'form-site';
 
+    /* Cada chalé aceita um número diferente de hóspedes. Ao escolher o chalé,
+       o campo de hóspedes passa a mostrar só o que cabe. Evita a pré-reserva
+       chegar no WhatsApp com "Pode-Cré, 4 pessoas", que não existe. */
+    const selHospedes = document.getElementById('prereserva-hospedes');
+    const avisoCap    = document.getElementById('prereserva-capacidade');
+
+    const limitarHospedes = () => {
+      if (!selChale || !selHospedes) return;
+      const op = selChale.options[selChale.selectedIndex];
+      const min = parseInt(op.getAttribute('data-min') || '1', 10);
+      const max = parseInt(op.getAttribute('data-max') || '8', 10);
+      const escolhidoAntes = parseInt(selHospedes.value, 10);
+
+      selHospedes.innerHTML = '';
+      for (let n = min; n <= max; n++) {
+        const o = document.createElement('option');
+        o.value = String(n);
+        o.textContent = String(n);
+        selHospedes.appendChild(o);
+      }
+      // mantém a escolha da pessoa quando ela ainda cabe; senão puxa pro limite
+      const novo = isNaN(escolhidoAntes) ? min : Math.min(Math.max(escolhidoAntes, min), max);
+      selHospedes.value = String(novo);
+
+      if (avisoCap) {
+        const mudou = !isNaN(escolhidoAntes) && escolhidoAntes !== novo;
+        if (mudou) {
+          avisoCap.textContent = min === max
+            ? `Esse chalé recebe ${max} pessoas, ajustamos para você.`
+            : `Esse chalé recebe de ${min} a ${max} pessoas, ajustamos para você.`;
+          avisoCap.hidden = false;
+        } else {
+          avisoCap.hidden = true;
+        }
+      }
+    };
+
+    if (selChale) selChale.addEventListener('change', limitarHospedes);
+
     const abrir = (chale) => {
       if (chale && selChale) selChale.value = chale;
+      limitarHospedes();
       modal.hidden = false;
       modal.setAttribute('aria-hidden', 'false');
       document.body.classList.add('modal-aberto');

@@ -1066,12 +1066,15 @@
 
         <label class="prereserva__label">
           Chalé
+          <!-- data-min e data-max definem quantos hóspedes cada chalé aceita.
+               O JS usa isso para limitar o campo de baixo. O value não muda,
+               para não quebrar a planilha nem a mensagem do WhatsApp. -->
           <select name="chale" id="prereserva-chale" required>
-            <option value="Ainda não escolhi">Ainda não escolhi</option>
-            <option value="Chalé Pode-Cré">Chalé Pode-Cré</option>
-            <option value="Chalé Uai-Só">Chalé Uai-Só</option>
-            <option value="Chalé Trem-Bão">Chalé Trem-Bão</option>
-            <option value="Chalé Demais da Conta">Chalé Demais da Conta</option>
+            <option value="Ainda não escolhi" data-min="1" data-max="8">Ainda não escolhi</option>
+            <option value="Chalé Pode-Cré" data-min="1" data-max="2">Chalé Pode-Cré (até 2 pessoas)</option>
+            <option value="Chalé Uai-Só" data-min="1" data-max="4">Chalé Uai-Só (até 4 pessoas)</option>
+            <option value="Chalé Trem-Bão" data-min="1" data-max="4">Chalé Trem-Bão (até 4 pessoas)</option>
+            <option value="Chalé Demais da Conta" data-min="4" data-max="8">Chalé Demais da Conta (4 a 8 pessoas)</option>
           </select>
         </label>
 
@@ -1088,15 +1091,19 @@
 
         <label class="prereserva__label">
           Hóspedes
-          <select name="hospedes" required>
+          <select name="hospedes" id="prereserva-hospedes" required>
             <option value="1">1</option>
             <option value="2" selected>2</option>
             <option value="3">3</option>
             <option value="4">4</option>
             <option value="5">5</option>
-            <option value="6 ou mais">6 ou mais</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
           </select>
         </label>
+
+        <p class="prereserva__nota" id="prereserva-capacidade" hidden></p>
 
         <p class="prereserva__nota">🕐 Check-in das 14h às 20h · Check-out até 12h</p>
 
