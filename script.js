@@ -325,6 +325,66 @@
      Os atributos data-cta nos botões continuam sendo usados pela variável do GTM. */
 
 
+  /* ---------------- Origem da visita (UTM) ----------------
+     Guarda de onde a pessoa veio já na primeira página que ela abre.
+     O Meta atribui sozinho o tráfego pago dele, mas não sabe nada de
+     link da bio, story e Google Meu Negócio — é pra isso que isto existe.
+     O valor vai junto no formulário e cai na planilha ao lado do lead. */
+  const Origem = (() => {
+    const CHAVE  = 'ibiti_origem';
+    const CAMPOS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid'];
+
+    const ler = () => {
+      try { return JSON.parse(sessionStorage.getItem(CHAVE)); } catch (e) { return null; }
+    };
+
+    (function capturar() {
+      if (ler()) return;                       // primeiro toque vence, não sobrescreve
+      const p = new URLSearchParams(location.search);
+      const achou = {};
+      CAMPOS.forEach((c) => { const v = p.get(c); if (v) achou[c] = v.slice(0, 200); });
+      if (!Object.keys(achou).length) return;  // visita sem parâmetro nenhum, não guarda
+      achou.referrer = document.referrer || '';
+      try { sessionStorage.setItem(CHAVE, JSON.stringify(achou)); } catch (e) { /* aba anônima */ }
+    })();
+
+    return {
+      dados() {
+        const d = ler() || {};
+        return {
+          utm_source:   d.utm_source   || (document.referrer ? 'referral' : 'direto'),
+          utm_medium:   d.utm_medium   || '',
+          utm_campaign: d.utm_campaign || '',
+          utm_content:  d.utm_content  || '',
+          utm_term:     d.utm_term     || '',
+          fbclid:       d.fbclid       || '',
+          referrer:     d.referrer     || document.referrer || ''
+        };
+      }
+    };
+  })();
+
+
+  /* ---------------- Correspondência avançada (Meta) ----------------
+     O formulário já pede nome e WhatsApp. Mandando esses dois campos
+     normalizados junto do evento de Lead, a taxa de correspondência do
+     Pixel sobe bastante: melhora atribuição, melhora otimização e faz o
+     público de Lead ficar utilizável mais cedo.
+     O Pixel aplica SHA-256 antes de transmitir, então o dado NÃO sai do
+     navegador em texto puro. */
+  const semAcento = (s) => (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+  const telefoneMeta = (bruto) => {
+    let d = (bruto || '').replace(/\D/g, '');
+    if (!d) return '';
+    if (d.length <= 11) d = '55' + d;   // número local: acrescenta o código do país
+    return d;
+  };
+
+  const primeiroNomeMeta = (bruto) =>
+    semAcento(bruto).trim().split(/\s+/)[0].toLowerCase().replace(/[^a-z]/g, '');
+
+
   /* ---------------- Modal Pré-reserva ---------------- */
   (() => {
     const modal = document.getElementById('prereserva');
@@ -435,7 +495,10 @@
         checkin:  (fd.get('checkin')  || '').toString(),
         checkout: (fd.get('checkout') || '').toString(),
         hospedes: (fd.get('hospedes') || '').toString(),
-        origem:   origemAtual
+        origem:   origemAtual,
+        // De onde a pessoa veio (bio, story, GBP, anúncio). Vai pra planilha
+        // junto com o lead, que é onde a Paola realmente olha.
+        ...Origem.dados()
       };
 
       // 1) Salva na planilha (não bloqueia; keepalive garante o envio mesmo ao abrir o WhatsApp)
@@ -445,7 +508,20 @@
 
       // 2) Evento pro GTM (pré-reserva qualificada) — o Lead passa a disparar aqui
       window.dataLayer = window.dataLayer || [];
-      window.dataLayer.push({ event: 'prereserva_enviada', chale: dados.chale, hospedes: dados.hospedes, origem: dados.origem });
+      window.dataLayer.push({
+        event:    'prereserva_enviada',
+        chale:    dados.chale,
+        hospedes: dados.hospedes,
+        origem:   dados.origem,
+        // origem da visita, pro Meta poder quebrar Lead por canal
+        utm_source:   dados.utm_source,
+        utm_medium:   dados.utm_medium,
+        utm_campaign: dados.utm_campaign,
+        utm_content:  dados.utm_content,
+        // correspondência avançada: o Pixel aplica SHA-256 antes de enviar
+        am_ph: telefoneMeta(dados.whatsapp),
+        am_fn: primeiroNomeMeta(dados.nome)
+      });
 
       // 3) Abre o WhatsApp com a mensagem já montada
       const msg =
@@ -478,6 +554,59 @@
         form.appendChild(aviso);
       }, 1200);
     });
+  })();
+
+
+  /* ---------------- Chalé visto (ViewContent) ----------------
+     Público por chalé só dava pra montar via Lead, que vai ser raro nas
+     primeiras semanas — os públicos ficariam vazios por meses. Marcando
+     quem olhou cada chalé, o remarketing por chalé junta volume bem antes.
+
+     Regra: o card precisa ficar 2s com metade dele na tela. Passar batido
+     rolando não conta. Dispara uma vez por chalé, por carregamento. */
+  (() => {
+    const cards = document.querySelectorAll('.chale-card');
+    if (!cards.length || !('IntersectionObserver' in window)) return;
+
+    const NOMES = {
+      'chale-pode-cre': 'Chalé Pode-Cré',
+      'chale-uai-so':   'Chalé Uai-Só',
+      'chale-trem-bao': 'Chalé Trem-Bão',
+      'chale-demais':   'Chalé Demais da Conta'
+    };
+
+    // Descobre o chalé pelo data-cta que já existe no card. Assim o
+    // index.html não precisou de nenhum atributo novo.
+    const nomeDoCard = (card) => {
+      const el = card.querySelector('a[data-cta]');
+      const cta = el ? (el.getAttribute('data-cta') || '') : '';
+      const chave = Object.keys(NOMES).find((k) => cta.indexOf(k) === 0);
+      return chave ? NOMES[chave] : '';
+    };
+
+    const enviados = new Set();
+    const timers = new WeakMap();
+
+    const obs = new IntersectionObserver((entradas) => {
+      entradas.forEach((e) => {
+        const nome = nomeDoCard(e.target);
+        if (!nome || enviados.has(nome)) { obs.unobserve(e.target); return; }
+
+        if (e.isIntersecting) {
+          timers.set(e.target, setTimeout(() => {
+            if (enviados.has(nome)) return;
+            enviados.add(nome);
+            window.dataLayer = window.dataLayer || [];
+            window.dataLayer.push({ event: 'chale_visto', chale: nome });
+            obs.unobserve(e.target);
+          }, 2000));
+        } else {
+          clearTimeout(timers.get(e.target));
+        }
+      });
+    }, { threshold: 0.5 });
+
+    cards.forEach((c) => obs.observe(c));
   })();
 
 })();
