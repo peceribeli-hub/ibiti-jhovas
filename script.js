@@ -391,7 +391,11 @@
     const form  = document.getElementById('prereserva-form');
     if (!modal || !form) return;
 
-    const ENDPOINT = 'https://script.google.com/macros/s/AKfycbx6dTvCBMGjz_47mwSwgW6uBeF1X9oqRlg1wdk0a-zk6-3D31abI1p2YpPBeEoMhl48-Q/exec';
+    // Apps Script que grava o lead na planilha. Trocado em 04/08/2026: a
+    // implantação anterior foi apagada e passou a devolver 404, o que fazia
+    // o lead sumir em silêncio (o fetch abaixo falha sem alarde de propósito,
+    // pra não travar a ida pro WhatsApp). Esta versão grava as 16 colunas.
+    const ENDPOINT = 'https://script.google.com/macros/s/AKfycbzeeg_0Rf5P7-BuVzFiJ4426peiNxN64HIXkyzvXEpHgaPJPQE9O-K6WWhEdNZBSojt5A/exec';
     const WHATS = '5532984789082';
     const selChale = document.getElementById('prereserva-chale');
 
