@@ -1,5 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/bio",     "destination": "/?utm_source=instagram&utm_medium=bio",     "permanent": false },
+    { "source": "/stories", "destination": "/?utm_source=instagram&utm_medium=stories", "permanent": false },
+    { "source": "/gbp",     "destination": "/?utm_source=google&utm_medium=gbp",        "permanent": false }
+  ],
   "headers": [
     {
       "source": "/images/(.*)",
