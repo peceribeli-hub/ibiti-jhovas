@@ -334,7 +334,17 @@
     const CHAVE  = 'ibiti_origem';
     const CAMPOS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'fbclid', 'gclid'];
 
+    /* A origem fica em memória, e o sessionStorage é só reforço.
+       Motivo (05/08/2026): o navegador interno do Facebook não devolve o que
+       foi gravado no sessionStorage. Um clique real no anúncio chegou com todos
+       os utm_* na URL e a planilha gravou "referral", porque o setItem abaixo
+       falha e o catch engole calado. No Instagram o mesmo código funciona.
+       Como o formulário é enviado na MESMA página que capturou a UTM, a
+       variável em memória sempre sobrevive, com ou sem armazenamento. */
+    let emMemoria = null;
+
     const ler = () => {
+      if (emMemoria) return emMemoria;
       try { return JSON.parse(sessionStorage.getItem(CHAVE)); } catch (e) { return null; }
     };
 
@@ -345,6 +355,7 @@
       CAMPOS.forEach((c) => { const v = p.get(c); if (v) achou[c] = v.slice(0, 200); });
       if (!Object.keys(achou).length) return;  // visita sem parâmetro nenhum, não guarda
       achou.referrer = document.referrer || '';
+      emMemoria = achou;                       // fonte da verdade: esta linha não falha
       try { sessionStorage.setItem(CHAVE, JSON.stringify(achou)); } catch (e) { /* aba anônima */ }
     })();
 
