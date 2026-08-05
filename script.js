@@ -396,6 +396,16 @@
     semAcento(bruto).trim().split(/\s+/)[0].toLowerCase().replace(/[^a-z]/g, '');
 
 
+  /* O <input type="date"> sempre devolve aaaa-mm-dd, independente do idioma do
+     aparelho. Quem lê a planilha e a mensagem do WhatsApp é gente, então a data
+     vira dd/mm/aaaa antes de sair daqui. Convertendo neste ponto, os dois
+     destinos são atendidos de uma vez: o Apps Script grava o que receber. */
+  const dataBR = (iso) => {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+    return m ? m[3] + '/' + m[2] + '/' + m[1] : (iso || '');
+  };
+
+
   /* ---------------- Modal Pré-reserva ---------------- */
   (() => {
     const modal = document.getElementById('prereserva');
@@ -507,8 +517,8 @@
         nome:     (fd.get('nome')     || '').toString().trim(),
         whatsapp: (fd.get('whatsapp') || '').toString().trim(),
         chale:    (fd.get('chale')    || '').toString(),
-        checkin:  (fd.get('checkin')  || '').toString(),
-        checkout: (fd.get('checkout') || '').toString(),
+        checkin:  dataBR((fd.get('checkin')  || '').toString()),
+        checkout: dataBR((fd.get('checkout') || '').toString()),
         hospedes: (fd.get('hospedes') || '').toString(),
         origem:   origemAtual,
         // De onde a pessoa veio (bio, story, GBP, anúncio). Vai pra planilha
